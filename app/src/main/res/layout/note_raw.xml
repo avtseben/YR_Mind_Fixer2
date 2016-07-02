@@ -1,27 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content" >
-
-    <ImageView
-        android:id="@+id/icon"
-        android:layout_width="30dp"
-        android:layout_height="24dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
-        android:src="@drawable/stickynotes" >
-    </ImageView>
-
-    <TextView
-        android:id="@+id/label"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:lines="1"
-        android:text="@+id/TextView01"
-        android:textSize="24dp"
-        >
-    </TextView>
+        android:layout_height="wrap_content">
 
-</LinearLayout>
+        <ImageView
+            android:layout_width="41dp"
+            android:layout_marginRight="8dp"
+            android:layout_height="37dp"
+            android:id="@+id/icon"
+            android:src="@drawable/stickynotes"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="4dp" />
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:orientation="vertical"
+            >
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="26dp"
+                android:layout_marginRight="8dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:id="@+id/label"
+                    android:text="TITLE-TITLE-TITLE-TITLE-TITLE-TITLE-TITLE"
+                    />
+            </FrameLayout>
+
+            <TableRow
+                android:layout_width="128dp"
+                android:layout_height="16dp">
+
+                <TextView
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="01.01.1970 00:00"
+                    android:id="@+id/date_subtitle"
+                    android:layout_column="0"
+                    android:layout_height="16dp"
+                    android:layout_width="256dp" />
+            </TableRow>
+
+        </TableLayout>
+    </LinearLayout>

@@ -36,5 +36,7 @@
     <string name="seconds_ago">" сек. назад"</string>
     <string name="note_made_in_future_humor">привет от Марти Макфлая</string>
     <string name="action_create">Создать</string>
+    <string name="toast_title_too_big">"Слишком длинный заголовок, max "</string>
+    <string name="toast_text_is_empty">Пустую заметку нет смысла сохранять</string>
 
 </resources>

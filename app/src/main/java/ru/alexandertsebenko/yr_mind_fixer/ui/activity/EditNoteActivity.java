@@ -53,9 +53,9 @@ public class EditNoteActivity extends Activity {
             setResult(RESULT_OK, intent);
             finish();
         } else if(titleTooBig){
-            Toast.makeText(EditNoteActivity.this,"Слишком длинный заголовок, max " + MAX_TITLE_SIZE, Toast.LENGTH_LONG ).show();
+            Toast.makeText(EditNoteActivity.this,getString(R.string.toast_title_too_big) + MAX_TITLE_SIZE, Toast.LENGTH_LONG ).show();
         } else {
-            Toast.makeText(EditNoteActivity.this,"Пустую заметку нет смысла сохранять", Toast.LENGTH_LONG ).show();
+            Toast.makeText(EditNoteActivity.this, R.string.toast_text_is_empty, Toast.LENGTH_LONG ).show();
         }
     }
     private boolean checkTitleSizeTooBig(){
