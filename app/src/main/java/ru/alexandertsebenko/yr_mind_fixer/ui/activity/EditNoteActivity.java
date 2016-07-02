@@ -5,11 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import ru.alexandertsebenko.yr_mind_fixer.R;
 
 public class EditNoteActivity extends Activity {
 
+    public static final int MAX_TITLE_SIZE = 24;
     EditText editTitleText;
     EditText editText;
     @Override
@@ -27,6 +29,9 @@ public class EditNoteActivity extends Activity {
             editText.setText(
                     getIntent().getStringExtra(AllNotesListActivity.KEY_TEXT_OF_NOTE)
             );
+        } else {
+            editTitleText.setHint("Заголовок");
+            editText.setHint("Если есть что написать - пиши!");
         }
     }
     public void onCancel(View view) {
@@ -34,11 +39,32 @@ public class EditNoteActivity extends Activity {
         setResult(RESULT_CANCELED, intent);
         finish();
     }
+    //Сохраняем заметку при условии что текст не пуст,заголовок не слишко большой
+    //Если заголовок пусть то не возвращаем в интенте null
     public void onSave(View view) {
-        Intent intent = new Intent();
-        intent.putExtra(AllNotesListActivity.KEY_TITLE_OF_NOTE, editTitleText.getText().toString());
-        intent.putExtra(AllNotesListActivity.KEY_TEXT_OF_NOTE, editText.getText().toString());
-        setResult(RESULT_OK, intent);
-        finish();
+        boolean titleTooBig = checkTitleSizeTooBig();
+        boolean textEmpty = checkTextIsEmpty();
+        boolean titleEmpty = checkTitleIsEmpty();
+        if(!titleTooBig && !textEmpty) {
+            Intent intent = new Intent();
+            if(!titleEmpty)
+                intent.putExtra(AllNotesListActivity.KEY_TITLE_OF_NOTE, editTitleText.getText().toString());
+            intent.putExtra(AllNotesListActivity.KEY_TEXT_OF_NOTE, editText.getText().toString());
+            setResult(RESULT_OK, intent);
+            finish();
+        } else if(titleTooBig){
+            Toast.makeText(EditNoteActivity.this,"Слишком длинный заголовок, max " + MAX_TITLE_SIZE, Toast.LENGTH_LONG ).show();
+        } else {
+            Toast.makeText(EditNoteActivity.this,"Пустую заметку нет смысла сохранять", Toast.LENGTH_LONG ).show();
+        }
+    }
+    private boolean checkTitleSizeTooBig(){
+            return editTitleText.getText().length() > MAX_TITLE_SIZE;
+    }
+    private boolean checkTextIsEmpty(){
+        return editText.getText().length() < 1;
+    }
+    private boolean checkTitleIsEmpty(){
+        return editTitleText.getText().length() < 1;
     }
 }

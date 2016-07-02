@@ -19,10 +19,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.activity.WriteNoteActivity"
-            android:label="@string/title_activity_write_note"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity
             android:name=".ui.activity.NoteActivity"
             android:label="@string/title_activity_unsorted_note"
             android:theme="@style/AppTheme.NoActionBar"/>

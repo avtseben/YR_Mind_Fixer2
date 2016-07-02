@@ -78,8 +78,6 @@ public class AllNotesListActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_create_text_note:
                 log.v("action_create_text");
-/*                intent = new Intent(this, WriteNoteActivity.class);
-                startActivity(intent);*/
                 Intent outIntentToWrite = new Intent(this, EditNoteActivity.class);
                 startActivityForResult(outIntentToWrite, REQUEST_CODE_WRITE_TEXT_NOTE);
                 break;
