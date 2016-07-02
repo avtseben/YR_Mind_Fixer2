@@ -24,6 +24,7 @@ import ru.alexandertsebenko.yr_mind_fixer.db.NoteDataSource;
 import ru.alexandertsebenko.yr_mind_fixer.ui.fragment.ImageFragment;
 import ru.alexandertsebenko.yr_mind_fixer.ui.fragment.PlaySoundFragment;
 import ru.alexandertsebenko.yr_mind_fixer.ui.fragment.TextNoteFragment;
+import ru.alexandertsebenko.yr_mind_fixer.util.DateBuilder;
 import ru.alexandertsebenko.yr_mind_fixer.util.Log_YR;
 
 
@@ -43,8 +44,7 @@ public class NoteActivity extends AppCompatActivity {
     private final String NOTE_ID_KEY = "NOTE_ID";
     private final String TEXT_FRAGMENT_TAG = "textFragmentTag";
     private Log_YR log = new Log_YR(getClass().toString());
-    private final long MINUTE_IN_SECS = 60;
-    private final long HOUR_IN_SECS = 3600;
+    private DateBuilder mDateSubTitleBuilder = new DateBuilder();
 
 
 
@@ -90,26 +90,9 @@ public class NoteActivity extends AppCompatActivity {
         //Set Date subtitle
         mDateSubtitle= (TextView)findViewById(R.id.date_subtitle);
         long noteCreationTime = datasource.getCreationDateByID(tnoteID);
-        mDateSubtitle.setText(timeTitleBuilder(noteCreationTime));
+        mDateSubtitle.setText(mDateSubTitleBuilder
+                .timeTitleBuilder(noteCreationTime));
     }
-    private String timeTitleBuilder(long noteCreationTime) {
-        long currentTime = System.currentTimeMillis();
-        if(currentTime >= noteCreationTime) {
-            long timeDeltaInSecs = Math.round((currentTime - noteCreationTime) / 1000);
-            if (timeDeltaInSecs >= HOUR_IN_SECS * 24) {
-                Date simpleDate = new Date(noteCreationTime);
-                String dateFormat = DateFormat.getInstance().format(simpleDate);
-                return dateFormat;
-            } else if (timeDeltaInSecs >= HOUR_IN_SECS) {
-                return Math.round(timeDeltaInSecs / HOUR_IN_SECS) + getString(R.string.hour_ago);
-            } else if (timeDeltaInSecs >= MINUTE_IN_SECS) {
-                return Math.round(timeDeltaInSecs / MINUTE_IN_SECS) + getString(R.string.minutes_ago);
-            }
-            return timeDeltaInSecs + getString(R.string.seconds_ago);
-        }
-        return getString(R.string.note_made_in_future_humor);
-    }
-
     public void setFragment(String noteType, String noteText) {
         log.v("setFragment called");
         FragmentManager supportFragmentManager = getSupportFragmentManager();
@@ -177,7 +160,6 @@ public class NoteActivity extends AppCompatActivity {
                     break;
             }
         }
-
     }
    @Override
     protected void onStart() {
@@ -248,7 +230,6 @@ public class NoteActivity extends AppCompatActivity {
         super.onRestoreInstanceState(state);
         if (state.getLong(NOTE_ID_KEY) > 0) {
             tnoteID = state.getLong(NOTE_ID_KEY);
-            Toast.makeText(NoteActivity.this, "note id " + tnoteID +" restored",Toast.LENGTH_SHORT).show();
         }
     }
 }

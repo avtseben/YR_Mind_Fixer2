@@ -6,7 +6,7 @@ import java.text.DateFormat;
 import java.util.Date;
 import ru.alexandertsebenko.yr_mind_fixer.R;
 
-public class DateBuilder extends AppCompatActivity{
+public class DateBuilder {
 
     private final long MINUTE_IN_SECS = 60;
     private final long HOUR_IN_SECS = 3600;
@@ -20,12 +20,12 @@ public class DateBuilder extends AppCompatActivity{
                 String dateFormat = DateFormat.getInstance().format(simpleDate);
                 return dateFormat;
             } else if (timeDeltaInSecs >= HOUR_IN_SECS) {
-                return Math.round(timeDeltaInSecs / HOUR_IN_SECS) + getString(R.string.hour_ago);
+                return Math.round(timeDeltaInSecs / HOUR_IN_SECS) + " час. назад";
             } else if (timeDeltaInSecs >= MINUTE_IN_SECS) {
-                return Math.round(timeDeltaInSecs / MINUTE_IN_SECS) + getString(R.string.minutes_ago);
+                return Math.round(timeDeltaInSecs / MINUTE_IN_SECS) + " мин. назад";
             }
-            return timeDeltaInSecs + getString(R.string.seconds_ago);
+            return timeDeltaInSecs + " сек. назад";
         }
-        return getString(R.string.note_made_in_future_humor);
+        return "Будущее";
     }
 }

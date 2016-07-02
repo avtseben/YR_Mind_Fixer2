@@ -8,17 +8,21 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.List;
 
 import ru.alexandertsebenko.yr_mind_fixer.R;
 import ru.alexandertsebenko.yr_mind_fixer.datamodel.Note;
 import ru.alexandertsebenko.yr_mind_fixer.ui.activity.AllNotesListActivity;
+import ru.alexandertsebenko.yr_mind_fixer.util.DateBuilder;
 
 public class NoteAdapter extends BaseAdapter {
 
     Context context;
     LayoutInflater layoutInflater;
     List<Note> notes;
+    private DateBuilder dateSubtitleBuilder = new DateBuilder();
 
     public NoteAdapter(Context context, List<Note> notes) {
         this.context = context;
@@ -45,23 +49,37 @@ public class NoteAdapter extends BaseAdapter {
             view = layoutInflater.inflate(R.layout.note_raw, parent, false);
         }
         Note tn = getNote(position);
-        //Если текстовая записка содержит заголовок
         TextView tv = (TextView) view.findViewById(R.id.label);
-        tv.setText(tn.getTextNote());
-        //Type
+        TextView dateSubTitle = (TextView) view.findViewById(R.id.date_subtitle);
+        //Подзаголовок времени создания
+        dateSubTitle.setText(dateSubtitleBuilder
+                .timeTitleBuilder(tn.getCreationDate()));
+        //Type. В зависимости от типа рисуем иконку
         switch (tn.getNoteType()) {
             case (AllNotesListActivity.NOTE_TYPE_TEXT):
-                ((ImageView) view.findViewById(R.id.icon)).setImageResource(R.drawable.stickynotes);
+                ((ImageView) view.findViewById(R.id.icon))
+                        .setImageResource(R.drawable.stickynotes);
                 //Если у заметки есть заголовок то печатаем его
                 if(tn.getNoteTitle() != null) {
                     tv.setText(tn.getNoteTitle());
-                }
+                } else
+                    tv.setText(tn.getTextNote());
                 break;
             case (AllNotesListActivity.NOTE_TYPE_AUDIO):
-                ((ImageView) view.findViewById(R.id.icon)).setImageResource(R.drawable.microphone);
+                ((ImageView) view.findViewById(R.id.icon))
+                        .setImageResource(R.drawable.microphone);
+                if(tn.getNoteTitle() != null) {
+                    tv.setText(tn.getNoteTitle());
+                } else
+                    tv.setText("Запись");//TODO Hardcode
                 break;
             case (AllNotesListActivity.NOTE_TYPE_FOTO):
-                ((ImageView) view.findViewById(R.id.icon)).setImageResource(R.drawable.camera);
+                ((ImageView) view.findViewById(R.id.icon))
+                        .setImageResource(R.drawable.camera);
+                if(tn.getNoteTitle() != null) {
+                    tv.setText(tn.getNoteTitle());
+                } else
+                    tv.setText("Снимок");
                 break;
         }
         return view;
@@ -69,8 +87,4 @@ public class NoteAdapter extends BaseAdapter {
     Note getNote(int position) {
         return ((Note) getItem(position));
     }
-
-
-
-
 }
