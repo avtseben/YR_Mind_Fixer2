@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:orientation="vertical" android:layout_width="match_parent"
+android:layout_height="match_parent">
+
+<LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:layout_width="53dp"
+        android:layout_height="match_parent"
+        android:id="@+id/icon_in_note_activity"
+        android:src="@drawable/stickynotes"
+        android:background="@color/colorMainAppGreen" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:orientation="vertical"
+        android:background="@color/colorMainAppGreen">
+
+        <TableRow
+            android:layout_width="256dp"
+            android:layout_height="48dp">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@+id/edit_text_title"
+                />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="128dp"
+            android:layout_height="16dp">
+
+            <TextView
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="date"
+                android:id="@+id/date_subtitle_in_edit_text"
+                android:layout_column="0"
+                android:layout_height="16dp"
+                android:layout_width="256dp" />
+        </TableRow>
+    </TableLayout>
+
+</LinearLayout>
+
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:layout_weight="20"
+    android:id="@+id/fragment_container_in_edit_note_activity"
+    >
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/edit_text_note"
+        android:layout_gravity="left|top" />
+</FrameLayout>
+
+<FrameLayout
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorMainAppGreen"
+    android:gravity="bottom|right"
+    android:layout_weight="1">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Назад"
+        android:id="@+id/button_edit_cancel"
+        android:layout_gravity="start|center_vertical"
+        android:onClick="onCancel"
+        android:layout_weight="1" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Готово"
+        android:id="@+id/button_edit_note_save"
+        android:layout_gravity="end|center_vertical"
+        android:onClick="onSave"
+        android:layout_weight="1" />
+</FrameLayout>
+
+</LinearLayout>

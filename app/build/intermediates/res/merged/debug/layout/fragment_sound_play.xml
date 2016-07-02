@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pause_btn"
+            android:id="@+id/btn_pause"
+            android:onClick="onClick"
+            android:layout_gravity="center_horizontal" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/play_btn"
+            android:onClick="onClick"
+            android:id="@+id/btn_play" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/stop_btn"
+            android:onClick="onClick"
+            android:id="@+id/btn_stop" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/back_btn"
+            android:id="@+id/btn_back"
+            android:onClick="onClick"
+            android:gravity="clip_horizontal|center" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fwd_btn"
+            android:id="@+id/btn_forward"
+            android:onClick="onClick"
+            android:layout_gravity="center_horizontal"
+            android:gravity="clip_horizontal|center" />
+
+    </LinearLayout>
+
+</LinearLayout>

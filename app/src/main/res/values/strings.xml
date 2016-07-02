@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">Ловец Мыслей</string>
+    <string name="title_activity_dummy">Dummy</string>
+    <string name="title_activity_fixed_unsorted_notes">FixedUnsortedNotes</string>
+    <string name="title_activity_">FixedUnsortedNotes</string>
+    <string name="title_activity_rooms_to_sort">RoomsToSort</string>
+    <string name="title_activity_what_to_do_with_note">WhatToDoWithNote</string>
+    <string name="title_activity_write_note">WriteNote</string>
+    <string name="title_activity_unsorted_note">UnsortedNote</string>
+    <string name="title_activity_edit_note">EditNote</string>
+    <string name="title_activity_rooms_manage">RoomManage</string>
+    <string name="dialog_alert">Внимание!</string>
+    <string name="dialog_mess_ask_for_delete">Удалить эту заметку?</string>
+    <string name="text_yes">Да</string>
+    <string name="text_no">Нет</string>
+    <string name="toast_dont_delete">Не будем удалять</string>
+    <string name="toast_delete">Хорошо, бывает, забыли...</string>
+    <string name="delete_button_text">Удалить</string>
+    <string name="edit_button_text">Редактировать</string>
+    <string name="back_button_text">Назад</string>
+    <string name="toast_note_write_ok">Сохранил</string>
+    <string name="toast_note_is_null">Пустую заметку нет смысла сохранять, чувак</string>
+    <string name="record_dialog_positive">OK</string>
+    <string name="record_dialog_negative">Отмена</string>
+    <string name="empty" />
+    <string name="imagefoto">imageFoto</string>
+    <string name="no_file_to_show_toast">А файла то нет :(</string>
+    <string name="pause_btn">Pause</string>
+    <string name="play_btn">Play</string>
+    <string name="stop_btn">Stop</string>
+    <string name="back_btn">Back</string>
+    <string name="fwd_btn">Fwd</string>
+    <string name="default_note_title">Заметка</string>
+    <string name="hour_ago">" час. назад"</string>
+    <string name="minutes_ago">" мин. назад"</string>
+    <string name="seconds_ago">" сек. назад"</string>
+    <string name="note_made_in_future_humor">привет от Марти Макфлая</string>
+    <string name="action_create">Создать</string>
+
+</resources>

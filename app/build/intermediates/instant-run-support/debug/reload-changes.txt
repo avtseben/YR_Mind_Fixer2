@@ -1,0 +1,4 @@
+CHANGED,C:\asp\YR_Mind_Fixer\app\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\ru\alexandertsebenko\yr_mind_fixer\ui\activity\EditNoteActivity$override.class
+CHANGED,C:\asp\YR_Mind_Fixer\app\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\ru\alexandertsebenko\yr_mind_fixer\ui\activity\AllNotesListActivity$override.class
+CHANGED,C:\asp\YR_Mind_Fixer\app\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\com\android\tools\fd\runtime\AppPatchesLoaderImpl.class
+CHANGED,C:\asp\YR_Mind_Fixer\app\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\ru\alexandertsebenko\yr_mind_fixer\ui\activity\AllNotesListActivity$1$override.class
