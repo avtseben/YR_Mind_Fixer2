@@ -17,6 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 
+import at.markushi.ui.CircleButton;
 import ru.alexandertsebenko.yr_mind_fixer.R;
 import ru.alexandertsebenko.yr_mind_fixer.util.Log_YR;
 
@@ -25,11 +26,11 @@ public class PlaySoundFragment extends Fragment implements View.OnClickListener{
     private File imageFile;
     private MediaPlayer mediaPlayer;
     private AudioManager am;
-    private Button mPauseButton;
-    private Button mPlayButton;
-    private Button mStopButton;
-    private Button mBackButton;
-    private Button mForwarButton;
+    private CircleButton mPauseButton;
+    private CircleButton mPlayButton;
+    private CircleButton mStopButton;
+    private CircleButton mBackButton;
+    private CircleButton mForwarButton;
     private Log_YR log;
     private View view;
     private boolean mCanWePlay;
@@ -49,11 +50,11 @@ public class PlaySoundFragment extends Fragment implements View.OnClickListener{
         super.onStart();
         view = getView();
         if(view != null) {
-            mPauseButton = (Button)view.findViewById(R.id.btn_pause);
-            mPlayButton = (Button)view.findViewById(R.id.btn_play);
-            mStopButton = (Button)view.findViewById(R.id.btn_stop);
-            mBackButton = (Button)view.findViewById(R.id.btn_back);
-            mForwarButton = (Button)view.findViewById(R.id.btn_forward);
+            mPauseButton = (CircleButton)view.findViewById(R.id.btn_pause);
+            mPlayButton = (CircleButton)view.findViewById(R.id.btn_play);
+            mStopButton = (CircleButton)view.findViewById(R.id.btn_stop);
+            mBackButton = (CircleButton)view.findViewById(R.id.btn_back);
+            mForwarButton = (CircleButton)view.findViewById(R.id.btn_forward);
             mPauseButton.setOnClickListener(this);
             mPlayButton.setOnClickListener(this);
             mStopButton.setOnClickListener(this);

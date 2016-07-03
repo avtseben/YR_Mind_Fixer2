@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -10,27 +11,29 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/pause_btn"
+        <at.markushi.ui.CircleButton
+            android:layout_width="64dip"
+            android:layout_height="64dip"
+            android:src="@drawable/pause"
             android:id="@+id/btn_pause"
-            android:onClick="onClick"
-            android:layout_gravity="center_horizontal" />
+            app:cb_color="#99CC00"
+            app:cb_pressedRingWidth="8dip" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/play_btn"
-            android:onClick="onClick"
-            android:id="@+id/btn_play" />
+        <at.markushi.ui.CircleButton
+            android:layout_width="64dip"
+            android:layout_height="64dip"
+            android:src="@drawable/play"
+            android:id="@+id/btn_play"
+            app:cb_color="#99CC00"
+            app:cb_pressedRingWidth="8dip" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/stop_btn"
-            android:onClick="onClick"
-            android:id="@+id/btn_stop" />
+        <at.markushi.ui.CircleButton
+            android:layout_width="64dip"
+            android:layout_height="64dip"
+            android:src="@drawable/stop"
+            android:id="@+id/btn_stop"
+            app:cb_color="#99CC00"
+            app:cb_pressedRingWidth="8dip" />
     </LinearLayout>
 
     <LinearLayout
@@ -39,23 +42,21 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/back_btn"
+        <at.markushi.ui.CircleButton
+            android:layout_width="64dip"
+            android:layout_height="64dip"
+            android:src="@drawable/step_backward"
             android:id="@+id/btn_back"
-            android:onClick="onClick"
-            android:gravity="clip_horizontal|center" />
+            app:cb_color="#99CC00"
+            app:cb_pressedRingWidth="8dip" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/fwd_btn"
+        <at.markushi.ui.CircleButton
+            android:layout_width="64dip"
+            android:layout_height="64dip"
+            android:src="@drawable/step_forward"
             android:id="@+id/btn_forward"
-            android:onClick="onClick"
-            android:layout_gravity="center_horizontal"
-            android:gravity="clip_horizontal|center" />
-
+            app:cb_color="#99CC00"
+            app:cb_pressedRingWidth="8dip" />
     </LinearLayout>
 
 </LinearLayout>
