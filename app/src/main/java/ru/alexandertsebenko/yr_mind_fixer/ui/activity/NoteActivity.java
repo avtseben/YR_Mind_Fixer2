@@ -3,6 +3,7 @@ package ru.alexandertsebenko.yr_mind_fixer.ui.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -59,6 +60,7 @@ public class NoteActivity extends AppCompatActivity {
         datasource.open();
         noteType = datasource.getNoteTypeByID(tnoteID);
         tnote = datasource.getNoteTextByID(tnoteID);
+        log.v(tnote);
         setNoteTitle();
         //Fragment works
         setFragment(noteType, tnote);
@@ -66,7 +68,6 @@ public class NoteActivity extends AppCompatActivity {
         if(!noteType.equals(AllNotesListActivity.NOTE_TYPE_TEXT)) {
             findViewById(R.id.button_edit_in_note_activity).setVisibility(View.INVISIBLE);
         }
-
     }
     private void setNoteTitle() {
         //Set Icon. Text type note is default
@@ -106,11 +107,16 @@ public class NoteActivity extends AppCompatActivity {
                 tf.setTextOfNote(tnote);//Отдаём текст заметки фрагменту
                 break;
             case AllNotesListActivity.NOTE_TYPE_FOTO://TODO разобраться почему при смене ориентации выскакивает NullPointException в ImageFragment.onStart
+                //Фиксируем ланшафтный вид
+//                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                log.v("1.setFragment ImageFragment");
                 uri = tnote;//Если заметка фотографическая то в качестве текста франиться uri ссылка на файл фотографии
                 ImageFragment imageFragment = new ImageFragment();
-                imageFragment.setFileByStringUri(uri);
-                transaction.add(R.id.fragment_container_in_note_activity, imageFragment);
+                transaction.replace(R.id.fragment_container_in_note_activity, imageFragment);
                 transaction.commit();
+                log.v("2.setFragment Transaction commited");
+                imageFragment.setFileByStringUri(uri);
+                log.v("3.setFragment setFileByStringUri called");
                 break;
             case AllNotesListActivity.NOTE_TYPE_AUDIO:
                 log.v("set fragment audio");
@@ -223,6 +229,7 @@ public class NoteActivity extends AppCompatActivity {
         //Сохранем ссылку на заметку, только ID
         if (tnoteID > 0)
             outState.putLong(NOTE_ID_KEY, tnoteID);
+//        outState.putString(AllNotesListActivity.KEY_TEXT_OF_NOTE,uri);
     }
 
     @Override
@@ -231,5 +238,7 @@ public class NoteActivity extends AppCompatActivity {
         if (state.getLong(NOTE_ID_KEY) > 0) {
             tnoteID = state.getLong(NOTE_ID_KEY);
         }
+//        if(state.getString(AllNotesListActivity.KEY_TEXT_OF_NOTE) != null)
+//            uri = state.getString(AllNotesListActivity.KEY_TEXT_OF_NOTE);
     }
 }

@@ -117,6 +117,7 @@ public class NoteDataSource {
                 columns, MySQLiteHelper.COLUMN_ID + " = " + id, null,
                 null, null, null);
         cursor.moveToFirst();
+        log.v("query to DB getNoteTextByID");
         String s = cursor.getString(0);
         cursor.close();
         return s;
