@@ -22,11 +22,12 @@ public class NoteAdapter extends BaseAdapter {
     Context context;
     LayoutInflater layoutInflater;
     List<Note> notes;
-    private DateBuilder dateSubtitleBuilder = new DateBuilder();
+    private DateBuilder dateSubtitleBuilder;
 
     public NoteAdapter(Context context, List<Note> notes) {
         this.context = context;
         this.notes = notes;
+        dateSubtitleBuilder = new DateBuilder(context);
         layoutInflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -71,7 +72,7 @@ public class NoteAdapter extends BaseAdapter {
                 if(tn.getNoteTitle() != null) {
                     tv.setText(tn.getNoteTitle());
                 } else
-                    tv.setText("Запись");//TODO Hardcode
+                    tv.setText(R.string.default_title_in_sound_note);
                 break;
             case (AllNotesListActivity.NOTE_TYPE_FOTO):
                 ((ImageView) view.findViewById(R.id.icon))
@@ -79,7 +80,7 @@ public class NoteAdapter extends BaseAdapter {
                 if(tn.getNoteTitle() != null) {
                     tv.setText(tn.getNoteTitle());
                 } else
-                    tv.setText("Снимок");
+                    tv.setText(R.string.default_title_in_foto_note);
                 break;
         }
         return view;

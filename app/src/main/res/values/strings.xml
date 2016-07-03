@@ -38,5 +38,7 @@
     <string name="action_create">Создать</string>
     <string name="toast_title_too_big">"Слишком длинный заголовок, max "</string>
     <string name="toast_text_is_empty">Пустую заметку нет смысла сохранять</string>
+    <string name="default_title_in_sound_note">Запись</string>
+    <string name="default_title_in_foto_note">Снимок</string>
 
 </resources>

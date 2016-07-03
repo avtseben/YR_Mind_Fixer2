@@ -45,7 +45,7 @@ public class NoteActivity extends AppCompatActivity {
     private final String NOTE_ID_KEY = "NOTE_ID";
     private final String TEXT_FRAGMENT_TAG = "textFragmentTag";
     private Log_YR log = new Log_YR(getClass().toString());
-    private DateBuilder mDateSubTitleBuilder = new DateBuilder();
+    private DateBuilder mDateSubTitleBuilder = new DateBuilder(this);
 
 
 
@@ -84,7 +84,14 @@ public class NoteActivity extends AppCompatActivity {
         mTitleTextView= (TextView)findViewById(R.id.note_title_in_note_activity);
         mNoteTitle = datasource.getTitleByID(tnoteID);
         if(mNoteTitle == null) {
-            mTitleTextView.setText(R.string.default_note_title);
+            switch (noteType) {
+                case AllNotesListActivity.NOTE_TYPE_FOTO:
+                    mTitleTextView.setText(R.string.default_title_in_foto_note);
+                    break;
+                case AllNotesListActivity.NOTE_TYPE_AUDIO:
+                    mTitleTextView.setText(R.string.default_title_in_sound_note);
+                    break;
+            }
         } else {
             mTitleTextView.setText(mNoteTitle);
         }
