@@ -18,6 +18,20 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+    <style name="PlaySoundButton">
+        <item name="android:layout_width">64dip</item>
+        <item name="android:layout_height">64dip</item>
+<!--        <item name="app:cb_color">#99CCCC</item>
+        <item name="app:cb_pressedRingWidth">8dip</item>-->
+
+    </style>
+    <style name="Buttons">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">0dp</item>
+        <item name="backgroundTint">@color/buttonsDark</item>
+        <item name="colorAccent">@color/buttonsDark</item>
+    </style>
 
     <!--<style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />-->
 

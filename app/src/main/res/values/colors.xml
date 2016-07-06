@@ -5,4 +5,5 @@
     <color name="colorAccent">#FF4081</color>
     <color name="colorMainAppGreenDark">#901b5e20</color>
     <color name="colorMainAppGreen">#701b5e20</color>
+    <color name="buttonsDark">#424242</color>
 </resources>

@@ -12,28 +12,25 @@
         android:layout_gravity="center_horizontal">
 
         <at.markushi.ui.CircleButton
-            android:layout_width="64dip"
-            android:layout_height="64dip"
+            style="@style/PlaySoundButton"
             android:src="@drawable/pause"
             android:id="@+id/btn_pause"
-            app:cb_color="#99CC00"
-            app:cb_pressedRingWidth="8dip" />
+            app:cb_color="@color/colorMainAppGreen"
+            app:cb_pressedRingWidth="16dip" />
 
         <at.markushi.ui.CircleButton
-            android:layout_width="64dip"
-            android:layout_height="64dip"
+            style="@style/PlaySoundButton"
             android:src="@drawable/play"
             android:id="@+id/btn_play"
-            app:cb_color="#99CC00"
+            app:cb_color="@color/colorMainAppGreen"
             app:cb_pressedRingWidth="8dip" />
 
         <at.markushi.ui.CircleButton
-            android:layout_width="64dip"
-            android:layout_height="64dip"
+            style="@style/PlaySoundButton"
             android:src="@drawable/stop"
             android:id="@+id/btn_stop"
-            app:cb_color="#99CC00"
-            app:cb_pressedRingWidth="8dip" />
+            app:cb_color="@color/colorMainAppGreen"
+            app:cb_pressedRingWidth="16dip" />
     </LinearLayout>
 
     <LinearLayout
@@ -43,20 +40,18 @@
         android:layout_gravity="center_horizontal">
 
         <at.markushi.ui.CircleButton
-            android:layout_width="64dip"
-            android:layout_height="64dip"
+            style="@style/PlaySoundButton"
             android:src="@drawable/step_backward"
             android:id="@+id/btn_back"
-            app:cb_color="#99CC00"
-            app:cb_pressedRingWidth="8dip" />
+            app:cb_color="@color/colorMainAppGreen"
+            app:cb_pressedRingWidth="16dip" />
 
         <at.markushi.ui.CircleButton
-            android:layout_width="64dip"
-            android:layout_height="64dip"
+            style="@style/PlaySoundButton"
             android:src="@drawable/step_forward"
             android:id="@+id/btn_forward"
-            app:cb_color="#99CC00"
-            app:cb_pressedRingWidth="8dip" />
+            app:cb_color="@color/colorMainAppGreen"
+            app:cb_pressedRingWidth="16dip" />
     </LinearLayout>
 
 </LinearLayout>
