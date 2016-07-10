@@ -12,9 +12,13 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewStub;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ViewSwitcher;
 
 import java.io.File;
 import java.text.DateFormat;
@@ -46,13 +50,15 @@ public class NoteActivity extends AppCompatActivity {
     private final String TEXT_FRAGMENT_TAG = "textFragmentTag";
     private Log_YR log = new Log_YR(getClass().toString());
     private DateBuilder mDateSubTitleBuilder = new DateBuilder(this);
+    private boolean mEditTitleMode;
+    private ViewSwitcher mEditTitleSwitcher;
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        log.v("NoteActivity created");
+        log.v("NoteActivity created " + mEditTitleMode);
         setContentView(R.layout.activity_note);
         b = getIntent().getExtras();
         tnoteID = b.getLong(AllNotesListActivity.KEY_ID);
@@ -64,10 +70,6 @@ public class NoteActivity extends AppCompatActivity {
         setNoteTitle();
         //Fragment works
         setFragment(noteType, tnote);
-        //Если заметка не текстовая то редакитровать нечего. Прячем кнопку
-        if(!noteType.equals(AllNotesListActivity.NOTE_TYPE_TEXT)) {
-            findViewById(R.id.button_edit_in_note_activity).setVisibility(View.INVISIBLE);
-        }
     }
     private void setNoteTitle() {
         //Set Icon. Text type note is default
@@ -81,6 +83,7 @@ public class NoteActivity extends AppCompatActivity {
                 break;
         }
         //Set Title
+        log.v("mEditTitleMode in setTitle(): " + mEditTitleMode);
         mTitleTextView= (TextView)findViewById(R.id.note_title_in_note_activity);
         mNoteTitle = datasource.getTitleByID(tnoteID);
         if(mNoteTitle == null) {
@@ -147,10 +150,20 @@ public class NoteActivity extends AppCompatActivity {
                 onBackPressed();
                 break;
             case R.id.button_edit_in_note_activity:
-                Intent intentToEdit = new Intent(this, EditNoteActivity.class);
-                intentToEdit.putExtra(AllNotesListActivity.KEY_TEXT_OF_NOTE, tnote);
-                intentToEdit.putExtra(AllNotesListActivity.KEY_TITLE_OF_NOTE, mNoteTitle);
-                startActivityForResult(intentToEdit, REQUEST_CODE_ACTIVITY_EDIT_TEXT);
+                log.v("mEditTitleMode in onClick(): " + mEditTitleMode);
+                if(mEditTitleMode) saveTitle();
+                else {
+                    if(noteType.equals(AllNotesListActivity.NOTE_TYPE_TEXT)) {
+                        Intent intentToEdit = new Intent(this, EditNoteActivity.class);
+                        intentToEdit.putExtra(AllNotesListActivity.KEY_TEXT_OF_NOTE, tnote);
+                        intentToEdit.putExtra(AllNotesListActivity.KEY_TITLE_OF_NOTE, mNoteTitle);
+                        startActivityForResult(intentToEdit, REQUEST_CODE_ACTIVITY_EDIT_TEXT);
+                    }
+                    //Если заметка не текстовая то редакитровать можно только заголовок.
+                    else {
+                        titleEdit(findViewById(R.id.note_title_in_note_activity));
+                    }
+                }
                 break;
         }
     }
@@ -234,18 +247,33 @@ public class NoteActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         //Сохранем ссылку на заметку, только ID
-        if (tnoteID > 0)
-            outState.putLong(NOTE_ID_KEY, tnoteID);
-//        outState.putString(AllNotesListActivity.KEY_TEXT_OF_NOTE,uri);
+        if (tnoteID > 0) outState.putLong(NOTE_ID_KEY, tnoteID);
+        log.v("mEditTitleMode: " + mEditTitleMode);
+        outState.putBoolean("EDIT_TITLE_STATE",mEditTitleMode);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle state) {
         super.onRestoreInstanceState(state);
-        if (state.getLong(NOTE_ID_KEY) > 0) {
-            tnoteID = state.getLong(NOTE_ID_KEY);
-        }
-//        if(state.getString(AllNotesListActivity.KEY_TEXT_OF_NOTE) != null)
-//            uri = state.getString(AllNotesListActivity.KEY_TEXT_OF_NOTE);
+        if (state.getLong(NOTE_ID_KEY) > 0) tnoteID = state.getLong(NOTE_ID_KEY);
+        mEditTitleMode = state.getBoolean("EDIT_TITLE_STATE");
+        log.v("restored mEditTitleMode: " + mEditTitleMode);
+    }
+
+    public void titleEdit(View view) {
+        mEditTitleMode = true;
+        mEditTitleSwitcher = (ViewSwitcher) findViewById(R.id.title_switcher);
+        TextView title = (TextView)findViewById(R.id.note_title_in_note_activity);
+        EditText editTitle = (EditText) findViewById(R.id.hidden_edit_note_title_in_note_activity);
+        editTitle.setText(title.getText());
+        mEditTitleSwitcher.showNext(); //or switcher.showPrevious();
+    }
+    public void saveTitle() {
+        mEditTitleMode = false;
+        mEditTitleSwitcher = (ViewSwitcher) findViewById(R.id.title_switcher);
+        TextView title = (TextView)findViewById(R.id.note_title_in_note_activity);
+        EditText editTitle = (EditText) findViewById(R.id.hidden_edit_note_title_in_note_activity);
+        title.setText(editTitle.getText());
+        mEditTitleSwitcher.showPrevious(); //or switcher.showPrevious();
     }
 }
