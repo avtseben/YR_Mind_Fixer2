@@ -27,12 +27,12 @@ public class NoteDataSource {
 
     public void open() throws SQLException {
         database = dbHelper.getWritableDatabase();
-        log.v("DataSource opened");
+        log.d("DataSource opened");
     }
 
     public void close() {
         dbHelper.close();
-        log.v("DataSource closed");
+        log.d("DataSource closed");
     }
     public SQLiteDatabase getDB() {
         return database;

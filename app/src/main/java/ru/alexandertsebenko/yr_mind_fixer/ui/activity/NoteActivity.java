@@ -4,8 +4,10 @@ package ru.alexandertsebenko.yr_mind_fixer.ui.activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
@@ -58,7 +60,7 @@ public class NoteActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        log.v("NoteActivity created " + mEditTitleMode);
+        if(savedInstanceState != null ) mEditTitleMode = savedInstanceState.getBoolean("EDIT_TITLE_STATE");
         setContentView(R.layout.activity_note);
         b = getIntent().getExtras();
         tnoteID = b.getLong(AllNotesListActivity.KEY_ID);
@@ -66,8 +68,8 @@ public class NoteActivity extends AppCompatActivity {
         datasource.open();
         noteType = datasource.getNoteTypeByID(tnoteID);
         tnote = datasource.getNoteTextByID(tnoteID);
-        log.v(tnote);
         setNoteTitle();
+        if(mEditTitleMode) setEditButtonAsSaveButton();
         //Fragment works
         setFragment(noteType, tnote);
     }
@@ -82,21 +84,25 @@ public class NoteActivity extends AppCompatActivity {
                 icon.setImageResource(R.drawable.microphone);
                 break;
         }
-        //Set Title
-        log.v("mEditTitleMode in setTitle(): " + mEditTitleMode);
-        mTitleTextView= (TextView)findViewById(R.id.note_title_in_note_activity);
-        mNoteTitle = datasource.getTitleByID(tnoteID);
-        if(mNoteTitle == null) {
-            switch (noteType) {
-                case AllNotesListActivity.NOTE_TYPE_FOTO:
-                    mTitleTextView.setText(R.string.default_title_in_foto_note);
-                    break;
-                case AllNotesListActivity.NOTE_TYPE_AUDIO:
-                    mTitleTextView.setText(R.string.default_title_in_sound_note);
-                    break;
+        //Set Title.Если не в режиме редактирования заголовка тогда
+        if(!mEditTitleMode) {
+            mTitleTextView = (TextView) findViewById(R.id.note_title_in_note_activity);
+            mNoteTitle = datasource.getTitleByID(tnoteID);
+            if(mNoteTitle == null) {
+                switch (noteType) {
+                    case AllNotesListActivity.NOTE_TYPE_FOTO:
+                        mTitleTextView.setText(R.string.default_title_in_foto_note);
+                        break;
+                    case AllNotesListActivity.NOTE_TYPE_AUDIO:
+                        mTitleTextView.setText(R.string.default_title_in_sound_note);
+                        break;
+                }
+            } else {
+                mTitleTextView.setText(mNoteTitle);
             }
         } else {
-            mTitleTextView.setText(mNoteTitle);
+            mEditTitleSwitcher = (ViewSwitcher) findViewById(R.id.title_switcher);
+            mEditTitleSwitcher.showNext();
         }
         //Set Date subtitle
         mDateSubtitle= (TextView)findViewById(R.id.date_subtitle);
@@ -167,6 +173,14 @@ public class NoteActivity extends AppCompatActivity {
                 break;
         }
     }
+    private void setEditButtonAsSaveButton() {
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.button_edit_in_note_activity);
+        fab.setImageResource(R.drawable.check);
+    }
+    private void setEditButtonToNormallState() {
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.button_edit_in_note_activity);
+        fab.setImageResource(R.drawable.pencil);
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
@@ -187,33 +201,8 @@ public class NoteActivity extends AppCompatActivity {
             }
         }
     }
-   @Override
-    protected void onStart() {
-        log.v("NoteActivity started");
-        super.onStart();
-    }
-    protected void onResume() {
-        log.v("NoteActivity resumed");
-        super.onResume();
-    }
-    @Override
-    protected void onPause() {
-        datasource.close();
-        log.v("NoteActivity paused");
-        super.onPause();
-    }
-    @Override
-    protected void onStop() {
-        log.v("NoteActivity stoped");
-        super.onStop();
-    }
-    @Override
-    protected void onDestroy() {
-        log.v("NoteActivity destroyed");
-        super.onDestroy();
-    }
     public void createDialog(View view) {
-        final Intent intentBack = new Intent(this, AllNotesListActivity.class);
+//        final Intent intentBack = new Intent(this, AllNotesListActivity.class);
         new AlertDialog.Builder(view.getContext())
                 .setTitle(getString(R.string.dialog_alert))
                 .setMessage(getString(R.string.dialog_mess_ask_for_delete))
@@ -239,11 +228,17 @@ public class NoteActivity extends AppCompatActivity {
     public static void deleteFileByURI(Uri uri){
         File file = new File(uri.getPath());
         try {
-            boolean fileDeleted = file.delete();
+            file.delete();
         } catch (Exception e) {
             System.out.print(e);
         }
     }
+
+    /**
+     * При повороте экрана важно запомнить ID заметки
+     * и статус режима редактирования заголовка(TextView или EditTextView)
+     * @param outState
+     */
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         //Сохранем ссылку на заметку, только ID
@@ -256,10 +251,16 @@ public class NoteActivity extends AppCompatActivity {
     protected void onRestoreInstanceState(Bundle state) {
         super.onRestoreInstanceState(state);
         if (state.getLong(NOTE_ID_KEY) > 0) tnoteID = state.getLong(NOTE_ID_KEY);
-        mEditTitleMode = state.getBoolean("EDIT_TITLE_STATE");
         log.v("restored mEditTitleMode: " + mEditTitleMode);
     }
 
+    /**
+     * Вызывается принажатии на залоговок
+     * Или (если этоне текстовая заметка)
+     * при нажатии на кнопку редактирования
+     *
+     * @param view
+     */
     public void titleEdit(View view) {
         mEditTitleMode = true;
         mEditTitleSwitcher = (ViewSwitcher) findViewById(R.id.title_switcher);
@@ -267,13 +268,22 @@ public class NoteActivity extends AppCompatActivity {
         EditText editTitle = (EditText) findViewById(R.id.hidden_edit_note_title_in_note_activity);
         editTitle.setText(title.getText());
         mEditTitleSwitcher.showNext(); //or switcher.showPrevious();
+        setEditButtonAsSaveButton();
     }
+
+    /**
+     * При нажатии на кнопку редактирования, которая в данном режиме
+     * является кнопкой "сохранить"
+     */
     public void saveTitle() {
         mEditTitleMode = false;
         mEditTitleSwitcher = (ViewSwitcher) findViewById(R.id.title_switcher);
         TextView title = (TextView)findViewById(R.id.note_title_in_note_activity);
         EditText editTitle = (EditText) findViewById(R.id.hidden_edit_note_title_in_note_activity);
-        title.setText(editTitle.getText());
+        String newText = editTitle.getText().toString();
+        title.setText(newText);
+        setEditButtonToNormallState();
+        datasource.updateTitleByID(tnoteID, newText);
         mEditTitleSwitcher.showPrevious(); //or switcher.showPrevious();
     }
 }

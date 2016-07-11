@@ -1,13 +1,11 @@
 package ru.alexandertsebenko.yr_mind_fixer.ui.activity;
 
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -17,11 +15,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
-import java.util.UUID;
-
 import ru.alexandertsebenko.yr_mind_fixer.ui.adapter.NoteAdapter;
 import ru.alexandertsebenko.yr_mind_fixer.R;
 import ru.alexandertsebenko.yr_mind_fixer.ui.fragment.RecordSoundFragment;
@@ -29,19 +22,19 @@ import ru.alexandertsebenko.yr_mind_fixer.datamodel.Note;
 import ru.alexandertsebenko.yr_mind_fixer.db.NoteDataSource;
 import ru.alexandertsebenko.yr_mind_fixer.util.Log_YR;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+import java.util.UUID;
+
 public class AllNotesListActivity extends AppCompatActivity {
-    private NoteDataSource datasource;
 
     public final static int REQUEST_CODE_WRITE_TEXT_NOTE = 300;
     public final static int REQUEST_CODE_TAKE_FOTO = 301;
-    public final static int REQUEST_CODE_RECORD_AUDIO = 302;
-
     public final static String PUBLIC_APP_DIRECTORY = "MindFixerFiles";
     public final static String FOTO_SUB_DIRECTORY = "foto";
     public final static String AUDIO_SUB_DIRECTORY = "audio";
-    public final static String VIDEO_SUB_DIRECTORY = "video";
     public final static String APP_LOG_TAG = "app_log_tag";
-
     public final static String KEY_TITLE_OF_NOTE = "title";
     public final static String KEY_TEXT_OF_NOTE = "textOfNote";
     public final static String KEY_ID = "ID";
@@ -49,14 +42,14 @@ public class AllNotesListActivity extends AppCompatActivity {
     public final static String NOTE_TYPE_AUDIO = "audio";
     public final static String NOTE_TYPE_FOTO = "foto";
     public final static String NOTE_TYPE_VIDEO = "video";
-
     public final static String IMAGE_FILE_FORMAT = "jpeg";
     public final static String SOUND_FILE_FORMAT = "3gpp";
-    private Log_YR log = new Log_YR(getClass().toString());
 
-    NoteAdapter noteAdapter;
-    Uri uri = null;
-    RecordSoundFragment soundRecordDialog;
+    private Log_YR log = new Log_YR(getClass().toString());
+    private NoteDataSource datasource;
+    private NoteAdapter noteAdapter;
+    private Uri uri = null;
+    private RecordSoundFragment soundRecordDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,13 +70,10 @@ public class AllNotesListActivity extends AppCompatActivity {
         Intent intent;
         switch (item.getItemId()) {
             case R.id.action_create_text_note:
-                log.v("action_create_text");
                 Intent outIntentToWrite = new Intent(this, EditNoteActivity.class);
                 startActivityForResult(outIntentToWrite, REQUEST_CODE_WRITE_TEXT_NOTE);
                 break;
             case R.id.action_create_foto_note:
-                log.v("action_create_foto");
-                Toast.makeText(AllNotesListActivity.this, "Завожу фотоаппарат. Пару секунд..", Toast.LENGTH_SHORT).show();
                 intent = new Intent();
                 if (isExternalStorageWritable()) {
                     String randomFileName = UUID.randomUUID().toString();
@@ -97,7 +87,6 @@ public class AllNotesListActivity extends AppCompatActivity {
                 }
                 break;
             case R.id.action_create_audio_note:
-                log.v("action_create_audio");
                 soundRecordDialog = new RecordSoundFragment();
                 soundRecordDialog.setCancelable(false);
                 soundRecordDialog.show(getFragmentManager(),"RECORD");
@@ -107,7 +96,6 @@ public class AllNotesListActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
     public void makeAdapter() {
         List<Note> values = datasource.getAllTextNotes();
         noteAdapter = new NoteAdapter(this, values);

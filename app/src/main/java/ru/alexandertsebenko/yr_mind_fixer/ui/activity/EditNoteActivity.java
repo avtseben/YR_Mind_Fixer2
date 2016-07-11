@@ -40,7 +40,7 @@ public class EditNoteActivity extends Activity {
         finish();
     }
     //Сохраняем заметку при условии что текст не пуст,заголовок не слишко большой
-    //Если заголовок пусть то не возвращаем в интенте null
+    //Если заголовок пуст то не возвращаем в интенте null
     public void onSave(View view) {
         boolean titleTooBig = checkTitleSizeTooBig();
         boolean textEmpty = checkTextIsEmpty();

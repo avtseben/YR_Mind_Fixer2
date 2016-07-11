@@ -9,15 +9,17 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:layout_width="53dp"
-            android:layout_height="match_parent"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
             android:id="@+id/icon_in_note_activity"
             android:src="@drawable/stickynotes"
-            android:background="@color/colorMainAppGreen" />
+            android:background="@color/colorMainAppGreen"
+            android:paddingRight="4dp"
+            android:padding="4dp" />
 
         <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             android:background="@color/colorMainAppGreen">
 
@@ -25,13 +27,27 @@
                 android:layout_width="256dp"
                 android:layout_height="48dp">
 
-                <TextView
+                <ViewSwitcher
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/title_switcher"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:id="@+id/note_title_in_note_activity"
-                    android:text="Title"
-                    />
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:id="@+id/note_title_in_note_activity"
+                        android:clickable="true"
+                        android:onClick="titleEdit"
+                        android:text="Title"/>
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/hidden_edit_note_title_in_note_activity" >
+                    </EditText>
+                </ViewSwitcher>
             </TableRow>
 
             <TableRow
