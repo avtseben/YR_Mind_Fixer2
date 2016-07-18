@@ -26,8 +26,9 @@ public class NoteDataSource {
     }
 
     public void open() throws SQLException {
-        database = dbHelper.getWritableDatabase();
-        log.d("DataSource opened");
+            if((database = dbHelper.getWritableDatabase()) == null)
+                database = dbHelper.getReadableDatabase();
+            log.d("DataSource opened");
     }
 
     public void close() {

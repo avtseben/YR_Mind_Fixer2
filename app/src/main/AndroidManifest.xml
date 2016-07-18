@@ -30,6 +30,11 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+        
+        <provider
+            android:exported="true"
+            android:authorities="ru.alexandertsebenko.yr_mind_fixer.provider.notes"
+            android:name=".provider.MfContentProvider"/>
 
     </application>
 </manifest>
