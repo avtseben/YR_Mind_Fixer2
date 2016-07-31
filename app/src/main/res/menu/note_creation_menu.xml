@@ -9,7 +9,7 @@
         app:showAsAction="ifRoom" />
 
     <item android:id="@+id/action_create_text_note"
-        android:title="Заметку"
+        android:title="Заметка"
         android:icon="@drawable/compose"
         android:orderInCategory="100"
         app:showAsAction="never" />
@@ -21,6 +21,10 @@
     <item android:id="@+id/action_create_audio_note"
         android:title="Звук"
         android:icon="@drawable/microphone"
+        android:orderInCategory="102"
+        app:showAsAction="never" />
+    <item android:id="@+id/action_sync"
+        android:title="Синхронизировать"
         android:orderInCategory="102"
         app:showAsAction="never" />
 </menu>
