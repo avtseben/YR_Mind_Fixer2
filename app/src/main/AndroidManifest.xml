@@ -37,5 +37,10 @@
             android:authorities="ru.alexandertsebenko.yr_mind_fixer.provider.notes"
             android:name=".provider.MfContentProvider"/>
 
+        <service
+            android:name=".service.SyncHandler"
+            android:exported="false" >
+        </service>
+
     </application>
 </manifest>

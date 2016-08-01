@@ -15,9 +15,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import org.apache.http.HttpResponse;
-
-import ru.alexandertsebenko.yr_mind_fixer.service.SyncManager;
+import ru.alexandertsebenko.yr_mind_fixer.net.Client;
+import ru.alexandertsebenko.yr_mind_fixer.service.SyncHandler;
 import ru.alexandertsebenko.yr_mind_fixer.ui.adapter.NoteAdapter;
 import ru.alexandertsebenko.yr_mind_fixer.R;
 import ru.alexandertsebenko.yr_mind_fixer.ui.fragment.RecordSoundFragment;
@@ -95,19 +94,14 @@ public class AllNotesListActivity extends AppCompatActivity {
                 soundRecordDialog.show(getFragmentManager(),"RECORD");
                 break;
             case R.id.action_sync:
-                //Пример запуска задачи в фоновом потоке чере создание Thread
-                Thread thread = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        SyncManager syncManager = new SyncManager();
-                        try {
-                            syncManager.makeRequest();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-                thread.start();
+/*                Client client = new Client(AllNotesListActivity.this);
+                try {
+                    client.post(datasource.getJustTextNotes());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }*/
+                Intent serviceIntent = new Intent(this, SyncHandler.class);
+                startService(serviceIntent);
                 break;
             default:
                 return super.onOptionsItemSelected(item);

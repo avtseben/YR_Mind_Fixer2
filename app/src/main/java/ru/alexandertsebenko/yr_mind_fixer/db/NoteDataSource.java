@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+import android.widget.ListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -102,6 +103,25 @@ public class NoteDataSource {
         cursor.close();
         return textNotes;
     }
+    public List<Note> getJustTextNotes() {
+        List<Note> textNotes = new ArrayList<>();
+        Cursor cursor = database.query(MySQLiteHelper.TABLE_TEXT_NOTES,
+                allColumns, MySQLiteHelper.COLUMN_NOTE_TYPE + " = 'text'"
+                , null, null, null, "_id" + " DESC");//Выборка всех колонок в обратном порядке TODO: убрать из hardcode
+
+        return cursorToNoteList(cursor);
+    }
+    private List<Note> cursorToNoteList(Cursor cursor){
+        List<Note> textNotes = new ArrayList<>();
+        cursor.moveToFirst();//cursor это очень похоже на result set
+        while (!cursor.isAfterLast()) {
+            Note textNote = cursorToTextNote(cursor);
+            textNotes.add(textNote);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return textNotes;
+    }
     public String getNoteTypeByID(long id) {
         String [] columns = {MySQLiteHelper.COLUMN_NOTE_TYPE};
         Cursor cursor = database.query(MySQLiteHelper.TABLE_TEXT_NOTES,//имя таблицы в Srting
@@ -133,6 +153,22 @@ public class NoteDataSource {
         cursor.close();
         return s;
     }
+    public List<Note> getUnsyncedNotes() {
+        String innerQuery = "SELECT "
+                + MySQLiteHelper.COLUMN_NOTE_ID
+                + " FROM "
+                + MySQLiteHelper.TABLE_NOTE_SYNC;
+        Cursor cursor = database.rawQuery("SELECT "
+                + "*"
+                + " FROM "
+                + MySQLiteHelper.TABLE_TEXT_NOTES
+                +" WHERE "
+                + MySQLiteHelper.COLUMN_ID
+                + " NOT IN "
+                + "(" + innerQuery + ");",
+                null);
+        return cursorToNoteList(cursor);
+    }
     public long getCreationDateByID(long id) {
         String [] columns = {MySQLiteHelper.COLUMN_TEXT_NOTE_CREATE_DATE};
         Cursor cursor = database.query(MySQLiteHelper.TABLE_TEXT_NOTES,//имя таблицы в Srting
@@ -151,5 +187,12 @@ public class NoteDataSource {
         textNote.setNoteType(cursor.getString(3));
         textNote.setCreationDate(cursor.getLong(4));
         return textNote;
+    }
+    public void markNoteAsSynced(long id) {
+        ContentValues values = new ContentValues();
+        values.put(MySQLiteHelper.COLUMN_NOTE_ID, id);
+        values.put(MySQLiteHelper.COLUMN_SYNC_DATE, System.currentTimeMillis());
+        log.d("Note marked as Synced with id: " + id + " in time: " + values.get(MySQLiteHelper.COLUMN_SYNC_DATE));
+        database.insert(MySQLiteHelper.TABLE_NOTE_SYNC, null , values);
     }
 }
