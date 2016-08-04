@@ -6,8 +6,10 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.app.TaskStackBuilder;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
@@ -21,6 +23,7 @@ import ru.alexandertsebenko.yr_mind_fixer.R;
 import ru.alexandertsebenko.yr_mind_fixer.datamodel.Note;
 import ru.alexandertsebenko.yr_mind_fixer.db.NoteDataSource;
 import ru.alexandertsebenko.yr_mind_fixer.net.Client;
+import ru.alexandertsebenko.yr_mind_fixer.receiver.NetworkChangeReceiver;
 import ru.alexandertsebenko.yr_mind_fixer.ui.activity.AllNotesListActivity;
 import ru.alexandertsebenko.yr_mind_fixer.util.Log_YR;
 
